@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>ast</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body onload="javascript:document.getElementById('bar').style.height=document.body.scrollHeight;">
+        <div class="sidebar" id="bar" title="To the beginning"></div>
+        <div class="body">
+            <h2 id="index">Index</h2>
+            <div id="indexdiv" style="display:block;">
+                {% for file in files %}
+                    {% if mode == 'allin' %}
+                        <a class="doclink" href="#{{file}}">{{file}}</a>
+                    {% else %}
+                        <a class="doclink" href="{{file}}.html">{{file}}</a>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+                <br>
+            </div>
+        </div>
+    </body>
+</html>

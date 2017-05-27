@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function BlockDisplay() {
+                if (document.getElementById('indexdiv').style.display=='none') document.getElementById('indexdiv').style.display='block'
+                else document.getElementById('indexdiv').style.display='none'
+            }
+        </script>
+        <title>ast</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body onload="javascript:document.getElementById('bar').style.height=document.body.scrollHeight;">
+        <a href="#index"><div class="sidebar" id="bar" title="To the beginning"></div></a>
+        <div class="body">
+            <a onclick="BlockDisplay();" style="cursor: pointer" title="Hide/show list of files"><h2 id="index">Index</h2></a>
+            <div id="indexdiv" style="display:block;">
+                {% for file in files %}
+                    {% if mode == 'allin' %}
+                        <a class="doclink" href="#{{file}}">{{file}}</a>
+                    {% else %}
+                        <a class="doclink" href="{{file}}.html">{{file}}</a>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+                <br>
+            </div>
+            {% for file, content in data.items() %}
+                <h2 id="{{file}}">{{file}}</h2>
+                <p>{{content['docstr']}}</p>
+                <br>
+                {% for class in content['classes'] %}
+                    <em>class</em> <tt class="cname" id="{{class['name']}}"><b>{{class['name']}}</b></tt>
+                    <dd>
+                        <p>{{class['docstr']}}</p>
+                        {% for method in class['methods'] %}
+                            <dl class="attribute">
+                                <tt class="methodname" id="{{method['name']}}"><b>{{method['name']}}(</b><em>{{method['sign']}}</em><b>)</b></tt>
+                                <dd><p>{{method['docstr']}}</p></dd>
+                            </dl>
+                        {% endfor %}
+                    </dd>
+                    <br>
+                {% endfor %}
+                {% for func in content['functions'] %}
+                    <tt class="cname" id="{{func['name']}}"><b>{{func['name']}}(</b><em>{{func['sign']}}</em><b>)</b></tt>
+                    <dd><p>{{func['docstr']}}</p></dd>
+                    <br>
+                {% endfor %}
+            {% endfor %}
+            <br>
+        </div>
+    </body>
+</html>
